@@ -36,7 +36,7 @@ namespace SortedListExTask
                 return;
             }
 
-            DateTime date = dtpTaskDate.Value;
+            DateTime date = dtpTaskDate.Value.Date;
 
             if (tasks.ContainsKey(date))
             {
@@ -47,19 +47,68 @@ namespace SortedListExTask
             {
                 int lastReccord = tasks.Count - 1;
                 tasks.Add(date, txtTask.Text.Trim());
-                lstTasks.Items.Add(date);
+                // binding data to lst
+                lstTasks.DisplayMember = "Key";
+                lstTasks.ValueMember = "Value";
+                lstTasks.DataSource = new BindingSource(tasks, null);
+
+                lstTasks.SelectedIndex = -1;
+                txtTask.ResetText();
             }
 
         }
 
         private void btnRemoveTask_Click(object sender, EventArgs e)
         {
-
+            if(lstTasks.SelectedIndex == -1)
+            {
+                MessageBox.Show("You must select a task to remove.");
+            }
+            else if(tasks.Count == 0)
+            {
+                MessageBox.Show("There are no task to remove.");
+            }
+            else
+            {
+                //remove here
+            }
         }
 
         private void btnPrintAll_Click(object sender, EventArgs e)
         {
+            if(tasks.Count != 0)
+            {
+                string msg = string.Empty;
 
+                foreach (var item in tasks)
+                {
+                    msg += $"{item.Key.ToString("MM'/'dd'/'yyyy")} {item.Value}\n";
+                }
+
+                MessageBox.Show(msg);
+            }
+            else
+            {
+                MessageBox.Show("There is nothing to pront.");
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        private void lstTasks_SelectedValueChanged(object sender, EventArgs e)
+        {
+            //int position = tasks.IndexOfKey(lstTasks.SelectedItem);
+            if(lstTasks.SelectedIndex == -1)
+            {
+                lblTaskDetails.ResetText();
+            }
+            else
+            {
+                lblTaskDetails.Text = lstTasks.SelectedValue.ToString();
+            }
+            
         }
 
         #endregion

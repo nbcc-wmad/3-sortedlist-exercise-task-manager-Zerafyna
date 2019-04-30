@@ -65,6 +65,7 @@
             this.lstTasks.Name = "lstTasks";
             this.lstTasks.Size = new System.Drawing.Size(188, 95);
             this.lstTasks.TabIndex = 14;
+            this.lstTasks.SelectedValueChanged += new System.EventHandler(this.lstTasks_SelectedValueChanged);
             // 
             // btnPrintAll
             // 
@@ -104,7 +105,8 @@
             // 
             // dtpTaskDate
             // 
-            this.dtpTaskDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpTaskDate.CustomFormat = "MM/dd/yyyy";
+            this.dtpTaskDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpTaskDate.Location = new System.Drawing.Point(24, 33);
             this.dtpTaskDate.Name = "dtpTaskDate";
             this.dtpTaskDate.Size = new System.Drawing.Size(200, 20);
