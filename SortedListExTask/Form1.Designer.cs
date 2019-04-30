@@ -56,6 +56,7 @@
             this.btnRemoveTask.TabIndex = 15;
             this.btnRemoveTask.Text = "Remove Task";
             this.btnRemoveTask.UseVisualStyleBackColor = true;
+            this.btnRemoveTask.Click += new System.EventHandler(this.btnRemoveTask_Click);
             // 
             // lstTasks
             // 
@@ -73,6 +74,7 @@
             this.btnPrintAll.TabIndex = 13;
             this.btnPrintAll.Text = "Print All Tasks";
             this.btnPrintAll.UseVisualStyleBackColor = true;
+            this.btnPrintAll.Click += new System.EventHandler(this.btnPrintAll_Click);
             // 
             // lblTaskDetails
             // 
@@ -90,6 +92,7 @@
             this.btnAddTask.TabIndex = 11;
             this.btnAddTask.Text = "Add Task";
             this.btnAddTask.UseVisualStyleBackColor = true;
+            this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
             // 
             // txtTask
             // 
@@ -101,6 +104,7 @@
             // 
             // dtpTaskDate
             // 
+            this.dtpTaskDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpTaskDate.Location = new System.Drawing.Point(24, 33);
             this.dtpTaskDate.Name = "dtpTaskDate";
             this.dtpTaskDate.Size = new System.Drawing.Size(200, 20);
