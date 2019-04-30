@@ -26,54 +26,97 @@ namespace SortedListExTask
             InitializeComponent();
         }
 
+        #region Methods
+
+        /// <summary>
+        /// Sets the data sourse and removes the selection
+        /// </summary>
+        private void SetListBox()
+        {
+            lstTasks.DataSource = new BindingSource(tasks, null);
+            lstTasks.SelectedIndex = -1;
+        }
+
+        #endregion
+
         #region Controlls
 
+        /// <summary>
+        /// Adding the task to the list and lst.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddTask_Click(object sender, EventArgs e)
         {
-            if (txtTask.Text.Trim() == string.Empty)
+
+            try
             {
-                MessageBox.Show("You must enter a task.");
-                return;
+                if (txtTask.Text.Trim() == string.Empty)
+                {
+                    MessageBox.Show("You must enter a task.");
+                    return;
+                }
+
+                DateTime date = dtpTaskDate.Value.Date;
+
+                if (tasks.ContainsKey(date))
+                {
+                    MessageBox.Show("Only one task per day is allowed.");
+                    return;
+                }
+                else
+                {
+                    int lastReccord = tasks.Count - 1;
+                    tasks.Add(date, txtTask.Text.Trim());
+                    // binding data to lst
+                    lstTasks.DisplayMember = "Key";
+                    lstTasks.ValueMember = "Value";
+                    SetListBox();
+                    txtTask.ResetText();
+                }
             }
-
-            DateTime date = dtpTaskDate.Value.Date;
-
-            if (tasks.ContainsKey(date))
+            catch (Exception ex)
             {
-                MessageBox.Show("Only one task per day is allowed.");
-                return;
-            }
-            else
-            {
-                int lastReccord = tasks.Count - 1;
-                tasks.Add(date, txtTask.Text.Trim());
-                // binding data to lst
-                lstTasks.DisplayMember = "Key";
-                lstTasks.ValueMember = "Value";
-                lstTasks.DataSource = new BindingSource(tasks, null);
-
-                lstTasks.SelectedIndex = -1;
-                txtTask.ResetText();
-            }
-
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }   
         }
 
+        /// <summary>
+        /// Removing the task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRemoveTask_Click(object sender, EventArgs e)
         {
-            if(lstTasks.SelectedIndex == -1)
+            try
             {
-                MessageBox.Show("You must select a task to remove.");
+                if (lstTasks.SelectedIndex == -1)
+                {
+                    MessageBox.Show("You must select a task to remove.");
+                }
+                else if (tasks.Count == 0)
+                {
+                    MessageBox.Show("There are no task to remove.");
+                }
+                else
+                {
+                    //remove here
+                    tasks.RemoveAt(lstTasks.SelectedIndex);
+                    SetListBox();
+                }
             }
-            else if(tasks.Count == 0)
+            catch (Exception ex)
             {
-                MessageBox.Show("There are no task to remove.");
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
-            else
-            {
-                //remove here
-            }
+
         }
 
+        /// <summary>
+        /// Printing all the existing tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrintAll_Click(object sender, EventArgs e)
         {
             if(tasks.Count != 0)
@@ -97,9 +140,13 @@ namespace SortedListExTask
 
         #region Events
 
+        /// <summary>
+        /// Displaying the Task in hte label when date is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lstTasks_SelectedValueChanged(object sender, EventArgs e)
         {
-            //int position = tasks.IndexOfKey(lstTasks.SelectedItem);
             if(lstTasks.SelectedIndex == -1)
             {
                 lblTaskDetails.ResetText();
