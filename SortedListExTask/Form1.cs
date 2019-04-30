@@ -155,7 +155,6 @@ namespace SortedListExTask
             {
                 lblTaskDetails.Text = lstTasks.SelectedValue.ToString();
             }
-            
         }
 
         #endregion
